@@ -1,0 +1,16 @@
+/* 
+    Document   : my_module
+    Created on : 12.12.2012, 19:44:02
+    Author     : Acer
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.my_title{
+    color: red;
+}
+
