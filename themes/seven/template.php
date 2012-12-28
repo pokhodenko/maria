@@ -6,6 +6,15 @@
 function seven_preprocess_page(&$vars) {
   $vars['primary_local_tasks'] = menu_primary_local_tasks();
   $vars['secondary_local_tasks'] = menu_secondary_local_tasks();
+  global $user;
+
+  $alias = drupal_get_path_alias($_GET['q']);
+  if ((strpos($alias, 'gallery') !== FALSE)) {
+    $vars['template_files'][] = 'visitors_page';
+  }
+  if (strpos($alias, 'contact') !== FALSE) {
+    $vars['template_files'][] = 'visitors_page';
+  }
 }
 
 /**
@@ -22,11 +31,25 @@ function seven_node_add_list($content) {
       $output .= '</li>';
     }
     $output .= '</ul>';
-  }
-  else {
+  } else {
     $output = '<p>' . t('You have not created any content types yet. Go to the <a href="@create-content">content type creation page</a> to add a new content type.', array('@create-content' => url('admin/structure/types/add'))) . '</p>';
   }
   return $output;
+}
+
+function seven_theme() {
+  return array(
+      'front_page_title' => array(
+          'template' => 'front_page_title',
+          'arguments' => array('content' => NULL),
+      )
+  );
+}
+function get_site_title_box(){
+  $items = new stdClass();
+  $items->title = 'POKHODENKO MARIA';
+  
+  return theme('front_page_title', $items);
 }
 
 /**
@@ -60,8 +83,7 @@ function seven_tablesort_indicator($style) {
   $theme_path = drupal_get_path('theme', 'seven');
   if ($style == 'asc') {
     return theme('image', $theme_path . '/images/arrow-asc.png', t('sort ascending'), t('sort ascending'));
-  }
-  else {
+  } else {
     return theme('image', $theme_path . '/images/arrow-desc.png', t('sort descending'), t('sort descending'));
   }
 }

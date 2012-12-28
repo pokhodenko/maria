@@ -1,99 +1,44 @@
 <?php
-function front_page_perm() {
-  return array('see front page');
-}
-function front_page_menu() {
-    $items['testing'] = array(
-        'title'=>'Front page',
-        'page callback' => 'front_page_testing_page',
-        'type' => MENU_CALLBACK,
-        'access callback' => 'user_access',  
-        'access arguments' => array('see front page'),
-    );
-    $items['ajax_load_content'] = array(
-        'page callback' => 'front_page_content_item_load',
-        'type' => MENU_CALLBACK,
-        'access arguments' => array('see front page'),
-    );
-    return $items;
-}
 
-function front_page_get_content() {
-    $count = 0;
-   /* for ($i = 0; $i < 30000000; $i++) {
-        $count = $count + 0.0012;
-    }*/
-    $result = db_query('SELECT tn.nid FROM term_node tn,term_data td WHERE td.vid = 1 AND tn.tid=td.tid');
-    $nids = array();
-    while($res = db_fetch_object($result)){
-       
-        $nids[] = $res->nid;
-    }
-    $nodes =array();
-    foreach ($nids as $nid){
-        
-        $node = node_load($nid);
-        unset($node->language);
-        unset($node->status);
-        unset($node->last_comment_name);
-        unset($node->comment_count);
-        unset($node->comment);
-        unset($node->promote);
-        unset($node->sticky);
-        unset($node->moderate);
-        unset($node->revision_timestamp);
-        unset($node->log);
-        unset($node->data);
-        unset($node->teaser);
-        unset($node->last_comment_timestamp);
-        unset($node->format);
-        
-        
-        foreach ($node->taxonomy as $taxonomy){
-            $ins_node = $node;
-            unset($ins_node->taxonomy);
-            //$nodes[$taxonomy->name][] = $ins_node;
-            $nodes[] = $ins_node;
-        
-        }
-        //$node->field_main_image = theme('fancybox', 'fancybox_formatter_main_image|fancybox', $node->field_main_image[0]['filepath']);
-       // $node->field_image_preview = theme('imagecache', 'image_preview', $node->field_image_preview[0]['filepath']);
-        $node->field_image_preview = imagecache_create_url('image_preview',$node->field_image_preview[0]['filepath'],false,false);
-        $node->field_main_image = imagecache_create_url('main_image',$node->field_main_image[0]['filepath'],false,false);
-       
-    }
-    
-    $return = new stdClass();
-    $return->nodes = $nodes;
-    $return->count = $count;
-    $return->title = 'My page title';
-    $return->body = 'My page body My page body My page body My page body My page body My page body My page body My page body My page body My page body My page body ';
-    
-    return $return;
+function gallery_main_image_menu() {
+  $items['gallery-image/%'] = array(
+      'title' => 'Contact information',
+      'page callback' => 'gallery_image_page',
+      'type' => MENU_CALLBACK,
+      'access callback' => 'user_access',
+      'access arguments' => array('see front page'),
+      'page arguments' => array(1),
+  );
+  
+  return $items;
 }
-
-function front_page_theme() {
-    return array(
-        'front_page_testing_page' => array(
-            'template' => 'templates/front_page_template',
-            'arguments' => array('content' => NULL),
-        )
-    );
+function gallery_main_image_theme(){
+   return array(
+      'gallery_image_page' => array(
+          'template' => 'gallery_main_image',
+          'arguments' => array('node' => NULL),
+      )
+  );
 }
+function gallery_image_page($nid) {
+  $node = node_load(array('nid'=>$nid));
+  $teaser = false;
+  $page = true;
+  $node = node_build_content($node, $teaser, $page);
 
-function front_page_testing_page() {
+  
+  $content = drupal_render($node->content);
+  if ($teaser) {
+    $node->teaser = $content;
+    unset($node->body);
+  }
+  else {
+    $node->body = $content;
+    unset($node->teaser);
+  }
 
-   drupal_add_css(drupal_get_path('module', 'front_page').'/css/front_page.css');
-   drupal_add_js(drupal_get_path('module', 'front_page').'/js/front_page.js');
-   if (!$items = cache_get('custom_page_cache', 'cache_page')) {
-        // No cache found, so retrieve the data
-        // then add to the cache with expiration after 60 seconds
-        $items = front_page_get_content(); // returns an array of event objects
-        cache_set('custom_page_cache', $items, 'cache_page', time() + (60));
-        return theme('front_page_testing_page',$items);
-   }
-    return theme('front_page_testing_page', $items->data);
-}
-function front_page_content_item_load(){
-    
+  // Allow modules to modify the fully-built node.
+  node_invoke_nodeapi($node, 'alter', $teaser, $page);
+  
+  echo theme('gallery_image_page',$node);
 }

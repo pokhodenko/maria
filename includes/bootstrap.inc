@@ -724,6 +724,22 @@ function page_get_cache() {
     }
   }
 }
+function get_specific_url_part(){
+  $specific_url_part = '';
+  if ((isset($_COOKIE['width']))&&(!empty($_COOKIE['width']))){
+    $specific_url_part.='/'.$_COOKIE['width'];
+  }
+  else{
+     $specific_url_part.='/default';
+  }
+  if ((isset($_COOKIE['hash']))&&(!empty($_COOKIE['hash']))){
+     $specific_url_part.='/'.ltrim($_COOKIE['hash'], '#');;
+  }
+  else{
+     $specific_url_part.='/default';
+  }
+  return $specific_url_part;
+}
 
 function drupal_page_is_cacheable($force = NULL) {
   static $forced_cache = TRUE;
@@ -1215,6 +1231,8 @@ function request_uri() {
       $uri = $_SERVER['SCRIPT_NAME'];
     }
   }
+  if (($uri == '/')||($uri == '/en')||($uri == '/ru')||(FALSE !== strpos($uri, '/gallery')))
+  $uri .= get_specific_url_part();
   // Prevent multiple slashes to avoid cross site requests via the FAPI.
   $uri = '/'. ltrim($uri, '/');
 

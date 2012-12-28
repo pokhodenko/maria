@@ -1,7 +1,7 @@
 
 /**
  * Generic elements.
- */
+*/
 body {
   color: #000;
   background: #fff;
@@ -50,7 +50,7 @@ h6 {
   font-size: 1.077em;
 }
 p {
-  margin: 1em 0;
+  margin: 0 0 1em 0;
 }
 dl {
   margin: 0 0 20px;
@@ -147,7 +147,7 @@ pre {
 
 /**
  * Skip link.
- */
+*/
 #skip-link {
   margin-top: 0;
   position: absolute;
@@ -184,7 +184,7 @@ pre {
 
 /**
  * Branding.
- */
+*/
 #branding {
   overflow: hidden;
   padding: 20px 20px 0 20px; /* LTR */
@@ -222,7 +222,7 @@ pre {
 
 /**
  * Help.
- */
+*/
 #help {
   font-size: 0.923em;
   margin-top: 1em;
@@ -236,7 +236,7 @@ pre {
 
 /**
  * Page title.
- */
+*/
 #page-title {
   background: #333;
   padding-top: 20px;
@@ -252,14 +252,14 @@ pre {
 
 /**
  * Console.
- */
+*/
 #console {
   margin: 9px 0 10px;
 }
 
 /**
  * Tabs.
- */
+*/
 ul.primary {
   float: right; /* LTR */
   border-bottom: none;
@@ -348,7 +348,7 @@ ul.secondary li.active a.active {
 
 /**
  * Page layout.
- */
+*/
 #page {
   padding: 20px 0 40px 0; /* LTR */
   margin-right: 40px; /* LTR */
@@ -438,7 +438,7 @@ div.submitted {
 
 /**
  * Tables.
- */
+*/
 table {
   width: 100%;
   font-size: 0.923em;
@@ -525,7 +525,7 @@ table.system-status-report tr.error {
 /**
  * Exception for webkit bug with the right border of the last cell
  * in some tables, since it's webkit only, we can use :last-child
- */
+*/
 tr td:last-child {
   border-right: 1px solid #bebfb9; /* LTR */
 }
@@ -548,7 +548,7 @@ tr td:last-child {
  *   'padding-left'/'padding-right' applied on a fieldset and inherit the
  *   positioning even to absolute positioned elements within; we therefore have
  *   to apply all padding to the inner .fieldset-wrapper instead.
- */
+*/
 fieldset {
   border: 1px solid #ccc;
   padding: 2.5em 0 0 0; /* LTR */
@@ -592,7 +592,7 @@ fieldset fieldset fieldset {
 
 /**
  * Form elements.
- */
+*/
 .form-item {
   padding: 9px 0;
   margin: 0 0 10px;
@@ -755,7 +755,7 @@ div.filter-options select {
 
 /**
  * System.
- */
+*/
 div.admin .right,
 div.admin .left {
   width: 49%;
@@ -1037,4 +1037,24 @@ form#views-ui-preview-form input#preview-submit {
 /* CCK */
 .content-add-more {
   margin-bottom: 10px;
+}
+#block-menu-primary-links li{
+  list-style: none;
+  float: left;
+  margin-left: 20px;
+}
+#block-menu-primary-links{
+  float: right;
+}
+#main_menu_region{
+  clear:both;
+  min-height: 30px;
+}
+#main_menu_region .delimiter{
+  height: 2px;
+  clear: both;
+  background-color: #555;
+}
+#site_title_box{
+  float: left;
 }

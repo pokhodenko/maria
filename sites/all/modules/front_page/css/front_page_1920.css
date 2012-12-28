@@ -7,10 +7,18 @@
 */
 
 root { 
-    display: block;
+  display: block;
 }
 
-.my_title{
-    color: red;
+.right_sidebar{
+  float: right;
+  width: 453px;
+}
+#page{
+  /*width: 1812px;*/
+}
+.left_sidebar #main_image{
+  height: 603px;
+  width: 815px;
 }
 

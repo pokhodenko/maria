@@ -1,5 +1,4 @@
 <?php
-
 /**
  * @file
  * Displays a single Drupal page.
@@ -83,72 +82,63 @@
   "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php print $language->language; ?>" lang="<?php print $language->language; ?>" dir="<?php print $language->dir; ?>">
 
-<head>
-  <?php print $head; ?>
-  <title><?php print $head_title; ?></title>
-  <?php print $styles; ?>
-  <!--[if lte IE 8]>
-    <style type="text/css" media="all">@import "<?php print $base_path . path_to_theme() ?>/ie.css";</style>
-  <![endif]-->
-  <!--[if lte IE 7]>
-    <style type="text/css" media="all">@import "<?php print $base_path . path_to_theme() ?>/ie7.css";</style>
-  <![endif]-->
-  <!--[if lte IE 6]>
-    <style type="text/css" media="all">@import "<?php print $base_path . path_to_theme() ?>/ie6.css";</style>
-  <![endif]-->
-  <?php print $scripts; ?>
-</head>
-<body class="<?php print $body_classes; ?>">
-  <div id="skip-link">
-    <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
-  </div>
+  <head>
+    <?php print $scripts; ?>
+    <?php print $head; ?>
+    <title><?php print $head_title; ?></title>
+    <?php print $styles; ?>
+    <!--[if lte IE 8]>
+      <style type="text/css" media="all">@import "<?php print $base_path . path_to_theme() ?>/ie.css";</style>
+    <![endif]-->
+    <!--[if lte IE 7]>
+      <style type="text/css" media="all">@import "<?php print $base_path . path_to_theme() ?>/ie7.css";</style>
+    <![endif]-->
+    <!--[if lte IE 6]>
+      <style type="text/css" media="all">@import "<?php print $base_path . path_to_theme() ?>/ie6.css";</style>
+    <![endif]-->
 
-  <?php print $page_top; ?>
-
-  <div id="branding" class="clearfix">
-    <?php if (!empty($breadcrumb)): ?>
-      <div id="breadcrumb"><?php print $breadcrumb; ?></div>
-    <?php endif; ?>
-    <?php if (!empty($title)): ?>
-      <h1 class="page-title"><?php print $title; ?></h1>
-    <?php endif; ?>
-    <?php if (!empty($primary_local_tasks)): ?>
-      <ul class="tabs primary">
-        <?php print $primary_local_tasks; ?>
-      </ul>
-    <?php endif; ?>
-  </div>
-
-  <div id="page">
-    <?php if (!empty($secondary_local_tasks)): ?>
-      <ul class="tabs secondary"><?php print $secondary_local_tasks; ?></ul>
-    <?php endif; ?>
-
-    <div id="content" class="clearfix">
-      <div class="element-invisible"><a id="main-content"></a></div>
-      <?php if ($messages): ?>
-        <div id="console" class="clearfix"><?php print $messages; ?></div>
-      <?php endif; ?>
-      <?php if (!empty($help)): ?>
-        <div id="help">
-          <?php print $help; ?>
-        </div>
-      <?php endif; ?>
-      <?php if (!empty($action_links)): ?>
-        <ul class="action-links">
-          <?php print drupal_render($action_links); ?>
-        </ul>
-      <?php endif; ?>
-      <?php print $content; ?>
+  </head>
+  <body class="<?php print $body_classes; ?>">
+    <div id="skip-link">
+      <a href="#main-content" class="element-invisible element-focusable"><?php print t('Skip to main content'); ?></a>
     </div>
 
-    <div id="footer">
-      <?php print $feed_icons; ?>
+    <?php print $page_top; ?>
+
+    <div id="page">
+     
+     
+      <div id="content" class="clearfix">
+        <div class="element-invisible"><a id="main-content"></a></div>
+
+        <?php if (!empty($help)): ?>
+          <div id="help">
+            <?php print $help; ?>
+          </div>
+        <?php endif; ?>
+        <?php if (!empty($main_menu_region)): ?>
+          <div id="main_menu_region">
+            
+            <?php echo $main_menu_region; ?>
+            <?php echo get_site_title_box();?>
+            <div class="delimiter"></div>
+          </div>
+        <?php endif; ?>
+        <?php if (!empty($action_links)): ?>
+          <ul class="action-links">
+            <?php print drupal_render($action_links); ?>
+          </ul>
+        <?php endif; ?>
+        <?php print $content; ?>
+      </div>
+
+      <div id="footer">
+        <?php print $feed_icons; ?>
+      </div>
     </div>
-  </div>
 
-  <?php print $page_bottom; ?>
+    <?php print $page_bottom; ?>
 
-  <?php print $closure; ?>
-</body>
+    <?php print $closure; ?>
+  </body>
 </html>

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<url><loc>http://drupal.local/</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
+<url><loc>http://drupal.local/gallery</loc><changefreq>daily</changefreq><priority>1.0</priority></url>
+<url><loc>http://drupal.local/gallery/images</loc></url>
+<url><loc>http://drupal.local/gallery/images/1920/345</loc></url>
+</urlset>

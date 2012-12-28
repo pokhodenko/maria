@@ -1,0 +1,32 @@
+/* 
+    Document   : contact_page
+    Created on : 27.12.2012, 13:46:00
+    Author     : Acer
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+  display: block;
+}
+
+.page_photo{
+  float: left;
+  padding: 0px 10px 10px 0; 
+}
+.block-locale{
+  float: left;
+}
+.block-locale li{
+  float: left;
+  list-style: none;
+  margin-right: 5px;
+
+}
+.block-locale li.first a{
+  border-right: 1px solid #0062A0;
+  padding-right: 5px;
+}
+.block-locale ul{
+  margin: 0 !important;
+}

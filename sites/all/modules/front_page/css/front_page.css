@@ -13,4 +13,28 @@ root {
 .my_title{
     color: red;
 }
+.right_sidebar .image{
+  float: left;
+  padding: 0 1px 1px 0;
+}
+.right_sidebar img{
+  display: block;
+}
+.clear-block{
+  clear: both;
+}
+.gallery{
+  min-height: 300px;
+  background-color: #888;
+}
+
+.right_sidebar .image{
+  opacity: 0.4;
+  cursor: pointer;
+}
+
+/*
+.right_sidebar .image:hover{
+  opacity: 1;
+}*/
 
