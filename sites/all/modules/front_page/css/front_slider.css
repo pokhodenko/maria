@@ -1,0 +1,36 @@
+/* 
+    Document   : test
+    Created on : 20.12.2012, 13:28:53
+    Author     : Acer
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+body {
+    /*background-color: #000;*/
+}
+.part{
+    width:100px;
+    height:100px;
+    opacity: 0;
+}
+#part1 {
+    background: url(../images/pic1.jpg) no-repeat;
+    
+}
+.image-wrapper{
+    background: url(../images/pic2.jpg);
+    width: 800px;
+}
+.row{
+    clear: both;
+    height:100px;
+}
+.part{
+    float: left;
+    border: 0px solid #ccc;
+    background: url(../images/pic1.jpg) no-repeat;
+}
