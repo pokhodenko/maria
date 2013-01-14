@@ -14,25 +14,41 @@ root {
     color: red;
 }
 .right_sidebar .image{
-  float: left;
-  padding: 0 1px 1px 0;
+    float: left;
+    padding: 0 1px 1px 0;
+}
+.right_sidebar .image.active{
+    opacity: 1 !important;
 }
 .right_sidebar img{
-  display: block;
+    display: block;
 }
 .clear-block{
-  clear: both;
+    clear: both;
 }
 .gallery{
-  min-height: 300px;
-  background-color: #888;
+    min-height: 300px;
+    background-color: #888;
 }
 
 .right_sidebar .image{
-  opacity: 0.4;
-  cursor: pointer;
+    opacity: 0.4;
+    cursor: pointer;
 }
-
+.left_sidebar #main_image {
+    position: absolute;
+    top: 0;
+}
+#page {
+    margin: auto;
+    padding: 10px 10px 10px 10px;
+    background: #fff;
+    position: relative;
+    color: #333;
+}
+.left_sidebar{
+    position: relative;
+}
 /*
 .right_sidebar .image:hover{
   opacity: 1;

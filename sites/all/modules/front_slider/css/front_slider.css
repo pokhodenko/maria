@@ -30,7 +30,9 @@ body {
     height:100px;
 }
 .part{
-    float: left;
+    /*float: left;*/
     border: 0px solid #ccc;
     background: url(../images/pic1.jpg) no-repeat;
+    position: absolute;
+   
 }

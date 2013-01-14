@@ -2,8 +2,8 @@
 
 define('IMAGE_RATIO_X', 16);
 define('IMAGE_RATIO_Y', 9);
-define('PARTS_X', 12);
-define('PARTS_Y', 3);
+define('PARTS_X', 9);
+define('PARTS_Y', 4);
 define('PICK_COLS', 3);
 define('PICK_ROWS', 4);
 
@@ -19,11 +19,51 @@ function front_page_perm() {
 
 function front_page_init() {
   global $screen_widths;
-  $screen_widths = array(1920, 1600, 1440, 1378, 1280, 1024);
+  $screen_widths = array(1920, 1600, 1440, 1366, 1280, 1024);
+  if (!in_array($_COOKIE['width'], $screen_widths)){
+      $_COOKIE['width'] = 'default';
+  }
+  
   drupal_add_css(drupal_get_path('module', 'front_page') . '/css/contact_page.css');
-  drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page_1920.css');
+  drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page_'.$_COOKIE['width'].'.css');
+  drupal_add_js(drupal_get_path('module', 'front_page') . '/js/front_slider.js');
+  drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_slider.css');
+  drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page.css');
+  drupal_add_js(drupal_get_path('module', 'front_page') . '/js/front_page.js');
+  
 }
-
+function get_main_image_width($scr_width){
+    $main_images_width = array(
+        1280=>900,
+        1366=>990,
+        1400=>990,
+        1600=>1125,
+        1920=>1350
+        );
+    $default = 1280;
+    if (isset($main_images_width[$scr_width])){
+        return $main_images_width[$scr_width];
+    }else{
+        return $default;
+    }
+    
+}
+function get_main_image_height($scr_width){
+    $main_images_height = array(
+        1280=>404,
+        1366=>444,
+        1400=>444,
+        1600=>500,
+        1920=>600
+        );
+    $default = 404;
+    if (isset($main_images_height[$scr_width])){
+        return $main_images_height[$scr_width];
+    }else{
+        return $default;
+    }
+    
+}
 function front_page_menu() {
   $items['gallery'] = array(
       'title' => 'Front page',
@@ -50,6 +90,10 @@ function front_page_menu() {
 
 function front_page_get_content() {
   $count = 0;
+  
+  $main_image_imagecache_preset = 'main_image_'.$_COOKIE['width'];
+  $image_preview_imagecache_preset = 'image_preview_'.$_COOKIE['width'];
+  
   $result = db_query('SELECT tn.nid FROM term_node tn,term_data td,node n WHERE td.vid = 1 AND tn.nid=n.nid AND tn.tid=td.tid ORDER BY n.created DESC');
   $nids = array();
   while ($res = db_fetch_object($result)) {
@@ -86,8 +130,10 @@ function front_page_get_content() {
       }
     }
     $node->taxonomy = $taxonomy;
-    $node->field_image_preview = imagecache_create_url('image_preview', $node->field_image_preview[0]['filepath'], false, false);
-    $node->field_main_image = imagecache_create_url('main_image', $node->field_main_image[0]['filepath'], false, false);
+/*   tf_imagecache_image_path($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath']);
+    tf_imagecache_image_path($main_image_imagecache_preset, $node->field_main_image[0]['filepath']);*/
+    $node->field_image_preview = imagecache_create_url($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath'], false, false);
+    $node->field_main_image = imagecache_create_url($main_image_imagecache_preset, $node->field_main_image[0]['filepath'], false, false);
     ++$count;
     $page_number = ceil($count/(PICK_COLS*PICK_ROWS));
     //echo $count/(PICK_COLS*PICK_ROWS).'<br>';
@@ -102,7 +148,22 @@ function front_page_get_content() {
 
   return $return;
 }
-
+/*
+function tf_imagecache_image_path ($presetname, $file_system_image_path) {
+	
+  if (!$preset = imagecache_preset_by_name($presetname)) { return; }
+  
+  $src = imagecache_create_path($presetname, $file_system_image_path);
+  
+  if (!file_exists($src)) {
+    if (!imagecache_build_derivative($preset['actions'], $file_system_image_path, $src)) {
+      watchdog("tf","tf_imagecache_image_path - imagecache_build_derivative failed - (" . $preset['actions'] . ") ($file_system_image_path) ($src)",WATCHDOG_WARNING);
+    }
+  }
+  
+return $src;
+}
+*/
 function front_page_theme() {
   return array(
       'front_page_testing_page' => array(
@@ -114,8 +175,7 @@ function front_page_theme() {
 
 function front_page_testing_page($category = 'all') {
 
-  drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page.css');
-  drupal_add_js(drupal_get_path('module', 'front_page') . '/js/front_page.js');
+
   if (!$items = cache_get('custom_page_cache', 'cache_page')) {
     // No cache found, so retrieve the data
     // then add to the cache with expiration after 60 seconds
@@ -157,10 +217,12 @@ function get_slider_params() {
   $params['width'] = $width;
   $params['parts_x'] = PARTS_X;
   $params['parts_y'] = PARTS_Y;
+  $params['main_image_width'] = get_main_image_width($_COOKIE['width']);
+  $params['main_image_height'] = get_main_image_height($_COOKIE['width']);
 
 
-  $params['part_size_x'] = (IMAGE_RATIO_Y * $width) / (IMAGE_RATIO_X * PARTS_Y);
-  $params['part_size_y'] = $width / PARTS_X;
+  $params['part_size_x'] = $params['main_image_width']/$params['parts_x'];
+  $params['part_size_y'] = $params['main_image_height'] / $params['parts_y'];
   echo json_encode($params);
 }
 function get_images_list(){

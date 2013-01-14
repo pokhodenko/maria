@@ -47,7 +47,7 @@ function randomize_assoc(){
 function generate_timeout(column,row,speed){
     
   timeout = (parseInt(column)+parseInt(row))*speed;
-  console.log(timeout);
+  //console.log(timeout);
     
   return timeout;
 }

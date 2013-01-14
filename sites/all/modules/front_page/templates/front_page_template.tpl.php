@@ -15,10 +15,36 @@
         </div>
 
       <?php endforeach; ?>
+      
 
     </div>
     <div class="left_sidebar">
-      <div id="main_image">
+     
+      <div id="image-slider-wrapper">
+            <?php
+            $x_parts = PARTS_X;
+            $y_parts = PARTS_Y;
+
+            $parts = array();
+
+            for ($i = 0; $i < $y_parts; $i++) {
+                $parts[$i] = array();
+                for ($j = 0; $j < $x_parts; $j++) {
+                    $parts[$i][$j] = $j;
+                }
+            }
+            ?>
+            <?php foreach ($parts as $key => $partx): ?>
+                <div id="row_<?php echo $key; ?>" class="row">
+                    <?php foreach ($partx as $part): ?>
+                        <div id="row_<?php echo $key; ?>_part_<?php echo $part; ?>" class="part"></div>
+                    <?php endforeach; ?>
+                </div>
+
+
+            <?php endforeach; ?>
+        </div>
+         <div id="main_image">
         
       </div>
     </div>

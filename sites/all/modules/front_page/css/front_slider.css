@@ -21,15 +21,16 @@ body {
     background: url(../images/pic1.jpg) no-repeat;
     
 }
-.image-wrapper{
+.image-slider-wrapper{
     background: url(../images/pic2.jpg);
     width: 800px;
 }
 .row{
-    clear: both;
     height:100px;
 }
 .part{
+    position: absolute;
+    z-index: 10;
     float: left;
     border: 0px solid #ccc;
     background: url(../images/pic1.jpg) no-repeat;

@@ -349,14 +349,6 @@ ul.secondary li.active a.active {
 /**
  * Page layout.
 */
-#page {
-  padding: 20px 0 40px 0; /* LTR */
-  margin-right: 40px; /* LTR */
-  margin-left: 40px; /* LTR */
-  background: #fff;
-  position: relative;
-  color: #333;
-}
 #secondary-links ul.links li {
   padding: 0 10px 10px 0; /* LTR */
 }
