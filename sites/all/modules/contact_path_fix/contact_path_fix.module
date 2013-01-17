@@ -1,5 +1,9 @@
 <?php
 
+function contact_path_fix_init(){
+    drupal_add_css(drupal_get_path('module', 'contact_path_fix') . '/css/contacts.css');
+}
+
 function contact_path_fix_menu() {
   $items['contacts'] = array(
       'title' => 'Contact information',

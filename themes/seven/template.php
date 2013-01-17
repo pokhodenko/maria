@@ -42,14 +42,24 @@ function seven_theme() {
       'front_page_title' => array(
           'template' => 'front_page_title',
           'arguments' => array('content' => NULL),
+      ),
+      'front_page_footer' => array(
+          'template' => 'front_page_footer',
+          'arguments' => array('content' => NULL),
       )
   );
 }
 function get_site_title_box(){
   $items = new stdClass();
-  $items->title = 'POKHODENKO MARIA';
+  $items->title = 'POHODENKO MARIA STUDIO';
   
   return theme('front_page_title', $items);
+}
+function get_site_footer_box(){
+  $items = new stdClass();
+  $items->body = 'Copyright Pohodenko Maria '.date ('Y');
+  
+  return theme('front_page_footer', $items);
 }
 
 /**

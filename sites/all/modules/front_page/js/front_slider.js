@@ -29,18 +29,24 @@ $(document).ready(function(){
     });
 });
 function params_loaded(){
+    
     $('.image').click(function(){
         id = $(this).attr('id');
         //alert(id);
         
-        if (Slider_params.animation_completed==true){
+        
+        if (Slider_params.animation_completed == true){
             $('.image').removeClass('active');
             $(this).addClass('active');
+            Params.manually_changed_hash = false;
+            window.location.hash=id;
             replace_element_backbround('.part',id);
             startAnimation(id,10);
+            
         }
         
     });
+
 }
 
 function startAnimation(node_id,speed){
@@ -63,9 +69,10 @@ function startAnimation(node_id,speed){
         
     // $(this).css('background-position',position_x+'px '+position_y+'px' );
     });
-    console.log(Slider_params.max_animation_timeout);
+    
     setTimeout(function(){
       replace_element_backbround('#main_image',node_id);
+    
       Slider_params.animation_completed = true;
     },parseInt(Slider_params.max_animation_timeout)+parseInt(600));
 }

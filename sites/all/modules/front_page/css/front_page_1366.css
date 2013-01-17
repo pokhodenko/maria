@@ -26,3 +26,7 @@ root {
     width: 1323px;
     margin: auto;
 }
+#block-menu-primary-links li{
+    margin-left: 30px;
+    margin-right: 30px;
+}

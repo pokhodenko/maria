@@ -54,11 +54,11 @@ $(document).ready(function(){
   setAllCookies();
   
   $(window).hashchange(function(){
-    console.log('changed');
     setAllCookies();
     if (Params.manually_changed_hash==true){
       window.location.reload();
     }
+    Params.manually_changed_hash = true;
   });
   $(window).resize(function() {
     setAllCookies();

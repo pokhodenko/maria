@@ -133,6 +133,7 @@
       </div>
 
       <div id="footer">
+        <?php echo get_site_footer_box() ?>
         <?php print $feed_icons; ?>
       </div>
     </div>

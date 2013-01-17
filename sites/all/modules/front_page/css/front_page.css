@@ -9,7 +9,12 @@
 root { 
     display: block;
 }
-
+#main_menu_region li{
+    padding: 0;
+}
+#main_menu_region ul.menu {
+    margin: 0;
+}
 .my_title{
     color: red;
 }
