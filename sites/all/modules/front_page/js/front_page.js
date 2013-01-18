@@ -22,8 +22,9 @@ $(document).ready(function (){
                 first_image.click();
             }
             else{
-                if ($(window.location.hash).size()>0){
-                    $(window.location.hash).click();
+                var el = window.location.hash.split('item_').join('');
+                if ($(el).size()>0){
+                    $(el).click();
                 }
             }
         }

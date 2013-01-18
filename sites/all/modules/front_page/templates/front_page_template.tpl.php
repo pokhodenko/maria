@@ -50,7 +50,7 @@
     </div>
   </div>
   <div class="clear-block">
-  <?php/*  <div class="my_title">
+  <div class="my_title">
       <h2><?php echo $content->title ?></h2>
       <?php echo 'hash = ' . $_COOKIE['hash'] . ' width = ' . $_COOKIE['width'] . ' uri = ' . request_uri(); ?>
     </div>
@@ -67,5 +67,5 @@
     <?php // echo '<pre>';print_r($content);echo '</pre>'; ?>
   </div>
   
-*/?>
+
 </div>

@@ -27,6 +27,8 @@ root {
     margin: auto;
 }
 #block-menu-primary-links li{
-    margin-left: 30px;
-    margin-right: 30px;
+    margin: 0px 30px 0px 30px;
+}
+.gallery{
+    min-height: 444px;
 }

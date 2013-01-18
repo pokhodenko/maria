@@ -39,7 +39,7 @@ function params_loaded(){
             $('.image').removeClass('active');
             $(this).addClass('active');
             Params.manually_changed_hash = false;
-            window.location.hash=id;
+            window.location.hash='item_'+id;
             replace_element_backbround('.part',id);
             startAnimation(id,10);
             

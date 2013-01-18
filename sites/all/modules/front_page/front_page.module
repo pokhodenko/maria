@@ -14,225 +14,229 @@ module_load_include('inc', 'front_page', 'includes/imagecache');
 module_load_include('inc', 'front_page', 'includes/cron');
 
 function front_page_perm() {
-  return array('see front page');
+    return array('see front page');
 }
 
 function front_page_init() {
-  global $screen_widths;
-  $screen_widths = array(1920, 1600, 1440, 1366, 1280, 1024);
-  if (!in_array($_COOKIE['width'], $screen_widths)){
-      $_COOKIE['width'] = 'default';
-  }
-  
-  drupal_add_css(drupal_get_path('module', 'front_page') . '/css/contact_page.css');
-  drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page_'.$_COOKIE['width'].'.css');
-  drupal_add_js(drupal_get_path('module', 'front_page') . '/js/front_slider.js');
-  drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_slider.css');
-  drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page.css');
-  drupal_add_js(drupal_get_path('module', 'front_page') . '/js/front_page.js');
-  
+    global $screen_widths;
+    $screen_widths = array(1920, 1600, 1440, 1366, 1280, 1024);
+    if ((!isset($_COOKIE['width'])) || (!in_array($_COOKIE['width'], $screen_widths))) {
+            $_COOKIE['width'] = 'default';
+    }
+
+    drupal_add_css(drupal_get_path('module', 'front_page') . '/css/contact_page.css');
+    drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page_'.$_COOKIE['width'].'.css');
+    drupal_add_js(drupal_get_path('module', 'front_page') . '/js/front_slider.js');
+    drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_slider.css');
+    drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page.css');
+    drupal_add_js(drupal_get_path('module', 'front_page') . '/js/front_page.js');
 }
-function get_main_image_width($scr_width){
+
+function get_main_image_width($scr_width) {
     $main_images_width = array(
-        1280=>900,
-        1366=>990,
-        1400=>990,
-        1600=>1125,
-        1920=>1350
-        );
+        1280 => 900,
+        1366 => 990,
+        1400 => 990,
+        1600 => 1125,
+        1920 => 1350
+    );
     $default = 1280;
-    if (isset($main_images_width[$scr_width])){
+    if (isset($main_images_width[$scr_width])) {
         return $main_images_width[$scr_width];
-    }else{
+    } else {
         return $default;
     }
-    
 }
-function get_main_image_height($scr_width){
+
+function get_main_image_height($scr_width) {
     $main_images_height = array(
-        1280=>404,
-        1366=>444,
-        1400=>444,
-        1600=>500,
-        1920=>600
-        );
+        1280 => 404,
+        1366 => 444,
+        1400 => 444,
+        1600 => 500,
+        1920 => 600
+    );
     $default = 404;
-    if (isset($main_images_height[$scr_width])){
+    if (isset($main_images_height[$scr_width])) {
         return $main_images_height[$scr_width];
-    }else{
+    } else {
         return $default;
     }
-    
 }
+
 function front_page_menu() {
-  $items['gallery'] = array(
-      'title' => 'Front page',
-      'page callback' => 'front_page_testing_page',
-      'type' => MENU_CALLBACK,
-      'access callback' => 'user_access',
-      'access arguments' => array('see front page'),
-      'page arguments' => array(1, 2),
-  );
-  $items['ajax_load_params'] = array(
-      'page callback' => 'get_slider_params',
-      'type' => MENU_CALLBACK,
-      'access callback' => 'user_access',
-      'access arguments' => array('see front page'),
-  );
-  $items['ajax_images_list'] = array(
-      'page callback' => 'get_images_list',
-      'type' => MENU_CALLBACK,
-      'access callback' => 'user_access',
-      'access arguments' => array('see front page'),
-  );
-  return $items;
+    $items['gallery'] = array(
+        'title' => 'Front page',
+        'page callback' => 'front_page_testing_page',
+        'type' => MENU_CALLBACK,
+        'access callback' => 'user_access',
+        'access arguments' => array('see front page'),
+        'page arguments' => array(1, 2),
+    );
+    $items['ajax_load_params'] = array(
+        'page callback' => 'get_slider_params',
+        'type' => MENU_CALLBACK,
+        'access callback' => 'user_access',
+        'access arguments' => array('see front page'),
+    );
+    $items['ajax_images_list'] = array(
+        'page callback' => 'get_images_list',
+        'type' => MENU_CALLBACK,
+        'access callback' => 'user_access',
+        'access arguments' => array('see front page'),
+    );
+    return $items;
 }
 
 function front_page_get_content() {
-  $count = 0;
-  
-  $main_image_imagecache_preset = 'main_image_'.$_COOKIE['width'];
-  $image_preview_imagecache_preset = 'image_preview_'.$_COOKIE['width'];
-  
-  $result = db_query('SELECT tn.nid FROM term_node tn,term_data td,node n WHERE td.vid = 1 AND tn.nid=n.nid AND tn.tid=td.tid ORDER BY n.created DESC');
-  $nids = array();
-  while ($res = db_fetch_object($result)) {
+    $count = 0;
 
-    $nids[] = $res->nid;
-  }
-  $nodes = array();
+    $main_image_imagecache_preset = 'main_image_' . $_COOKIE['width'];
+    $image_preview_imagecache_preset = 'image_preview_' . $_COOKIE['width'];
 
-  foreach ($nids as $nid) {
+    $result = db_query('SELECT tn.nid FROM term_node tn,term_data td,node n WHERE td.vid = 1 AND tn.nid=n.nid AND tn.tid=td.tid ORDER BY n.created DESC');
+    $nids = array();
+    while ($res = db_fetch_object($result)) {
 
-    $node = node_load($nid);
-    unset($node->language);
-    unset($node->status);
-    unset($node->last_comment_name);
-    unset($node->comment_count);
-    unset($node->comment);
-    unset($node->promote);
-    unset($node->sticky);
-    unset($node->moderate);
-    unset($node->revision_timestamp);
-    unset($node->log);
-    unset($node->data);
-    unset($node->teaser);
-    unset($node->last_comment_timestamp);
-    unset($node->format);
+        $nids[] = $res->nid;
+    }
+    $nodes = array();
+
+    foreach ($nids as $nid) {
+
+        $node = node_load($nid);
+        unset($node->language);
+        unset($node->status);
+        unset($node->last_comment_name);
+        unset($node->comment_count);
+        unset($node->comment);
+        unset($node->promote);
+        unset($node->sticky);
+        unset($node->moderate);
+        unset($node->revision_timestamp);
+        unset($node->log);
+        unset($node->data);
+        unset($node->teaser);
+        unset($node->last_comment_timestamp);
+        unset($node->format);
 
 
-    foreach ($node->taxonomy as $taxonomy) {
-      $ins_node = $node;
-      if (!empty($ins_node->taxonomy)) {
-        foreach($ins_node->taxonomy as $term) {
-          $taxonomy = $term->name;
+        foreach ($node->taxonomy as $taxonomy) {
+            $ins_node = $node;
+            if (!empty($ins_node->taxonomy)) {
+                foreach ($ins_node->taxonomy as $term) {
+                    $taxonomy = $term->name;
+                }
+            }
         }
-      }
+        $node->taxonomy = $taxonomy;
+        /*   tf_imagecache_image_path($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath']);
+          tf_imagecache_image_path($main_image_imagecache_preset, $node->field_main_image[0]['filepath']); */
+        $node->field_image_preview = imagecache_create_url($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath'], false, false);
+        $node->field_main_image = imagecache_create_url($main_image_imagecache_preset, $node->field_main_image[0]['filepath'], false, false);
+        ++$count;
+        $page_number = ceil($count / (PICK_COLS * PICK_ROWS));
+        //echo $count/(PICK_COLS*PICK_ROWS).'<br>';
+        $nodes[$page_number][] = $node;
     }
-    $node->taxonomy = $taxonomy;
-/*   tf_imagecache_image_path($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath']);
-    tf_imagecache_image_path($main_image_imagecache_preset, $node->field_main_image[0]['filepath']);*/
-    $node->field_image_preview = imagecache_create_url($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath'], false, false);
-    $node->field_main_image = imagecache_create_url($main_image_imagecache_preset, $node->field_main_image[0]['filepath'], false, false);
-    ++$count;
-    $page_number = ceil($count/(PICK_COLS*PICK_ROWS));
-    //echo $count/(PICK_COLS*PICK_ROWS).'<br>';
-    $nodes[$page_number][] = $node;
-  }
 
-  $return = new stdClass();
-  $return->nodes = $nodes;
-  $return->count = $count;
-  $return->title = 'My page title';
-  $return->body = 'My page body My page body My page body My page body My page body My page body My page body My page body My page body My page body My page body ';
+    $return = new stdClass();
+    $return->nodes = $nodes;
+    $return->count = $count;
+    $return->title = 'My page title';
+    $return->body = 'My page body My page body My page body My page body My page body My page body My page body My page body My page body My page body My page body ';
 
-  return $return;
+    return $return;
 }
+
 /*
-function tf_imagecache_image_path ($presetname, $file_system_image_path) {
-	
+  function tf_imagecache_image_path ($presetname, $file_system_image_path) {
+
   if (!$preset = imagecache_preset_by_name($presetname)) { return; }
-  
+
   $src = imagecache_create_path($presetname, $file_system_image_path);
-  
+
   if (!file_exists($src)) {
-    if (!imagecache_build_derivative($preset['actions'], $file_system_image_path, $src)) {
-      watchdog("tf","tf_imagecache_image_path - imagecache_build_derivative failed - (" . $preset['actions'] . ") ($file_system_image_path) ($src)",WATCHDOG_WARNING);
-    }
+  if (!imagecache_build_derivative($preset['actions'], $file_system_image_path, $src)) {
+  watchdog("tf","tf_imagecache_image_path - imagecache_build_derivative failed - (" . $preset['actions'] . ") ($file_system_image_path) ($src)",WATCHDOG_WARNING);
   }
-  
-return $src;
-}
-*/
+  }
+
+  return $src;
+  }
+ */
+
 function front_page_theme() {
-  return array(
-      'front_page_testing_page' => array(
-          'template' => 'templates/front_page_template',
-          'arguments' => array('content' => NULL),
-      )
-  );
+    return array(
+        'front_page_testing_page' => array(
+            'template' => 'templates/front_page_template',
+            'arguments' => array('content' => NULL),
+        )
+    );
 }
 
 function front_page_testing_page($category = 'all') {
 
 
-  if (!$items = cache_get('custom_page_cache', 'cache_page')) {
-    // No cache found, so retrieve the data
-    // then add to the cache with expiration after 60 seconds
-    $items = front_page_get_content(); // returns an array of event objects
-    cache_set('custom_page_cache', $items, 'cache_page', time() + (60));
-    $items->current_page = get_current_page();
-    return theme('front_page_testing_page', $items);
-  }
-  $items->data->current_page = get_current_page();
-  return theme('front_page_testing_page', $items->data);
+    if (!$items = cache_get('custom_page_cache', 'cache_page')) {
+        // No cache found, so retrieve the data
+        // then add to the cache with expiration after 60 seconds
+        $items = front_page_get_content(); // returns an array of event objects
+        cache_set('custom_page_cache', $items, 'cache_page', time() + (60));
+        $items->current_page = get_current_page();
+        return theme('front_page_testing_page', $items);
+    }
+    $items->data->current_page = get_current_page();
+    return theme('front_page_testing_page', $items->data);
 }
-function get_current_page(){
-  return 1;
+
+function get_current_page() {
+    return 1;
 }
 
 function get_imagecache_suffix($width) {
-  if (isset($width)) {
-    if ($width >= 1920) {
-      return 1920;
-    } elseif ($width >= 1600) {
-      return 1600;
-    } elseif ($width >= 1400) {
-      return 1440;
-    } elseif ($width >= 1366) {
-      return 1366;
-    } elseif ($width >= 1280) {
-      return 1280;
-    } elseif ($width < 1024) {
-      return 1024;
-    } else {
-      return 1024;
+    if (isset($width)) {
+        if ($width >= 1920) {
+            return 1920;
+        } elseif ($width >= 1600) {
+            return 1600;
+        } elseif ($width >= 1400) {
+            return 1440;
+        } elseif ($width >= 1366) {
+            return 1366;
+        } elseif ($width >= 1280) {
+            return 1280;
+        } elseif ($width < 1024) {
+            return 1024;
+        } else {
+            return 1024;
+        }
     }
-  }
 }
 
 function get_slider_params() {
-  $width = get_imagecache_suffix($_COOKIE['width']);
-  $params = array();
-  $params['width'] = $width;
-  $params['parts_x'] = PARTS_X;
-  $params['parts_y'] = PARTS_Y;
-  $params['main_image_width'] = get_main_image_width($_COOKIE['width']);
-  $params['main_image_height'] = get_main_image_height($_COOKIE['width']);
+    $width = get_imagecache_suffix($_COOKIE['width']);
+    $params = array();
+    $params['width'] = $width;
+    $params['parts_x'] = PARTS_X;
+    $params['parts_y'] = PARTS_Y;
+    $params['main_image_width'] = get_main_image_width($_COOKIE['width']);
+    $params['main_image_height'] = get_main_image_height($_COOKIE['width']);
 
 
-  $params['part_size_x'] = $params['main_image_width']/$params['parts_x'];
-  $params['part_size_y'] = $params['main_image_height'] / $params['parts_y'];
-  echo json_encode($params);
+    $params['part_size_x'] = $params['main_image_width'] / $params['parts_x'];
+    $params['part_size_y'] = $params['main_image_height'] / $params['parts_y'];
+    echo json_encode($params);
 }
-function get_images_list(){
-  $content = front_page_get_content();
-  //print_r($content);
-  $images = array();
-  
-  foreach ($content->nodes[get_current_page()] as $node){
-    $images[$node->nid] = $node->field_main_image;
-  }
- 
-  echo json_encode($images);
+
+function get_images_list() {
+    $content = front_page_get_content();
+    //print_r($content);
+    $images = array();
+
+    foreach ($content->nodes[get_current_page()] as $node) {
+        $images[$node->nid] = $node->field_main_image;
+    }
+
+    echo json_encode($images);
 }
