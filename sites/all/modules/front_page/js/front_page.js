@@ -29,9 +29,9 @@ $(document).ready(function (){
             }
         }
     });
-    $('.right_sidebar .image').hover(function(){
+    $('.right_sidebar .image').hover(function(){      
         $(this).animate({
-            opacity:'1'
+            opacity:'1'         
         },150);
     });
     $('.right_sidebar .image').mouseout(function(){
