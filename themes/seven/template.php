@@ -57,7 +57,7 @@ function get_site_title_box(){
 }
 function get_site_footer_box(){
   $items = new stdClass();
-  $items->body = 'Copyright Pohodenko Maria '.date ('Y');
+  $items->body = 'Developed by POHODENKO MARIA STUDIO Copyright '.date ('Y');
   
   return theme('front_page_footer', $items);
 }
