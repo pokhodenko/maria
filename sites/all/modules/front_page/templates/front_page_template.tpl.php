@@ -1,7 +1,7 @@
 <div class="main_content" >
     <div class="gallery">
         <div class="right_sidebar">
-            
+
             <?php foreach ($content->nodes as $page_number => $content_page): ?>
                 <?php $pages[$page_number] = $content_page[0]->nid; ?>
                 <?php if ($page_number == $content->current_page): ?>
@@ -47,10 +47,17 @@
             <div id="main_image">
 
             </div>
+            <div class="portfolio_description">
+                <?php foreach ($content->nodes[$content->current_page] as $node): ?>
+                    <div id="desc_<?php echo $node->nid; ?>" class="element_description">
+                        <?php echo $node->body; ?>
+                    </div>
+                <?php endforeach; ?>
+            </div>
         </div>
     </div>
     <div class="clear-block"></div>
-    
+
     <div class="right_pagination_wrapper">
         <div class="right_pagination">
 
@@ -61,14 +68,8 @@
             <?php endforeach; ?>  
         </div> 
     </div>
-    <div class="portfolio_description">
-        <?php foreach($content->nodes[$content->current_page] as $node): ?>
-        <div id="desc_<?php echo $node->nid; ?>" class="element_description">
-            <?php echo $node->body; ?>
-        </div>
-        <?php endforeach;?>
-    </div>
-    
+
+
     <?php /* <div class="my_title">
       <h2><?php echo $content->title ?></h2>
       <?php echo 'hash = ' . $_COOKIE['hash'] . ' width = ' . $_COOKIE['width'] . ' uri = ' . request_uri(); ?>
@@ -87,7 +88,7 @@
       <?php echo 'current_page = '. $content->current_page; ?>
 
      */ ?>
-      <?php // echo '<pre>';print_r($content);echo '</pre>'; ?>
+    <?php // echo '<pre>';print_r($content);echo '</pre>'; ?>
 
 
 

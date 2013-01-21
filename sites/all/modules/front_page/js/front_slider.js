@@ -27,6 +27,11 @@ $(document).ready(function(){
         })
         params_loaded();
     });
+    $(".left_sidebar").bind("mouseenter",function(){
+         $('.portfolio_description').slideDown("slow");
+    }).bind("mouseleave",function(){
+        $('.portfolio_description').slideUp("slow");
+    });
 });
 function params_loaded(){
     setCookie('page', '1');
@@ -87,9 +92,9 @@ function startAnimation(node_id,speed){
     });
     
     setTimeout(function(){
-      replace_element_backbround('#main_image',node_id);
+        replace_element_backbround('#main_image',node_id);
     
-      Slider_params.animation_completed = true;
+        Slider_params.animation_completed = true;
     },parseInt(Slider_params.max_animation_timeout)+parseInt(600));
 }
 function set_prop(id,position_x,position_y){

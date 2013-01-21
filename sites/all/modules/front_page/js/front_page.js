@@ -36,7 +36,7 @@ $(document).ready(function (){
     });
     $('.right_sidebar .image,.front_page_image').mouseout(function(){
         $(this).animate({
-            opacity:'0.4'
+            opacity:'0.7'
         },150);
     });
    
