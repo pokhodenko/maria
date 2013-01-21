@@ -68,7 +68,7 @@ $(document).ready(function(){
 });
 function get_hash_from_cookie(cookie_hash){
   cookie_hash = cookie_hash.split('#').join('');
-  setCookie('hash__', '#item_'+cookie_hash);
+  setCookie('hash', '#item_'+cookie_hash);
   return '#item_'+cookie_hash;
 }
 

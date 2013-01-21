@@ -21,11 +21,11 @@ function front_page_init() {
     global $screen_widths;
     $screen_widths = array(1920, 1600, 1440, 1366, 1280, 1024);
     if ((!isset($_COOKIE['width'])) || (!in_array($_COOKIE['width'], $screen_widths))) {
-            $_COOKIE['width'] = 'default';
+        $_COOKIE['width'] = 'default';
     }
 
     drupal_add_css(drupal_get_path('module', 'front_page') . '/css/contact_page.css');
-    drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page_'.$_COOKIE['width'].'.css');
+    drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page_' . $_COOKIE['width'] . '.css');
     drupal_add_js(drupal_get_path('module', 'front_page') . '/js/front_slider.js');
     drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_slider.css');
     drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page.css');
@@ -85,16 +85,39 @@ function front_page_menu() {
         'access callback' => 'user_access',
         'access arguments' => array('see front page'),
     );
+    $items['front'] = array(
+        'title' => 'Front page',
+        'page callback' => 'front_page',
+        'type' => MENU_CALLBACK,
+        'access callback' => 'user_access',
+        'access arguments' => array('see front page'),
+        'page arguments' => array(1, 2),
+    );
     return $items;
 }
 
-function front_page_get_content() {
+function front_page() {
+    $items = new stdClass();
+    $items->data = front_page_get_content('all');
+    return theme('front_page', $items->data);
+}
+
+function front_page_get_content($category) {
     $count = 0;
 
     $main_image_imagecache_preset = 'main_image_' . $_COOKIE['width'];
     $image_preview_imagecache_preset = 'image_preview_' . $_COOKIE['width'];
+    $result = db_query('SELECT * FROM term_data');
+    while ($res = db_fetch_object($result)) {
 
-    $result = db_query('SELECT tn.nid FROM term_node tn,term_data td,node n WHERE td.vid = 1 AND tn.nid=n.nid AND tn.tid=td.tid ORDER BY n.created DESC');
+        $terms[] = $res->name;
+    }
+    if (in_array($category, $terms)) {
+        $term_clause = "AND td.name = '$category'";
+    } else {
+        $term_clause = '';
+    }
+    $result = db_query('SELECT tn.nid FROM term_node tn,term_data td,node n WHERE td.vid = 1 AND tn.nid=n.nid AND tn.tid=td.tid ' . $term_clause . ' ORDER BY n.created DESC');
     $nids = array();
     while ($res = db_fetch_object($result)) {
 
@@ -105,6 +128,7 @@ function front_page_get_content() {
     foreach ($nids as $nid) {
 
         $node = node_load($nid);
+        $node = node_build_content($node, NULL, NULL);
         unset($node->language);
         unset($node->status);
         unset($node->last_comment_name);
@@ -119,6 +143,7 @@ function front_page_get_content() {
         unset($node->teaser);
         unset($node->last_comment_timestamp);
         unset($node->format);
+        unset($node->content);
 
 
         foreach ($node->taxonomy as $taxonomy) {
@@ -130,8 +155,8 @@ function front_page_get_content() {
             }
         }
         $node->taxonomy = $taxonomy;
-        /*   tf_imagecache_image_path($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath']);
-          tf_imagecache_image_path($main_image_imagecache_preset, $node->field_main_image[0]['filepath']); */
+        tf_imagecache_image_path($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath']);
+        tf_imagecache_image_path($main_image_imagecache_preset, $node->field_main_image[0]['filepath']);
         $node->field_image_preview = imagecache_create_url($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath'], false, false);
         $node->field_main_image = imagecache_create_url($main_image_imagecache_preset, $node->field_main_image[0]['filepath'], false, false);
         ++$count;
@@ -149,48 +174,57 @@ function front_page_get_content() {
     return $return;
 }
 
-/*
-  function tf_imagecache_image_path ($presetname, $file_system_image_path) {
+function tf_imagecache_image_path($presetname, $file_system_image_path) {
 
-  if (!$preset = imagecache_preset_by_name($presetname)) { return; }
+    if (!$preset = imagecache_preset_by_name($presetname)) {
+        return;
+    }
 
-  $src = imagecache_create_path($presetname, $file_system_image_path);
+    $src = imagecache_create_path($presetname, $file_system_image_path);
 
-  if (!file_exists($src)) {
-  if (!imagecache_build_derivative($preset['actions'], $file_system_image_path, $src)) {
-  watchdog("tf","tf_imagecache_image_path - imagecache_build_derivative failed - (" . $preset['actions'] . ") ($file_system_image_path) ($src)",WATCHDOG_WARNING);
-  }
-  }
+    if (!file_exists($src)) {
+        if (!imagecache_build_derivative($preset['actions'], $file_system_image_path, $src)) {
+            watchdog("tf", "tf_imagecache_image_path - imagecache_build_derivative failed - (" . $preset['actions'] . ") ($file_system_image_path) ($src)", WATCHDOG_WARNING);
+        }
+    }
 
-  return $src;
-  }
- */
+    return $src;
+}
 
 function front_page_theme() {
     return array(
         'front_page_testing_page' => array(
             'template' => 'templates/front_page_template',
             'arguments' => array('content' => NULL),
-        )
+        ),
+        'front_page' => array(
+            'template' => 'templates/front_page',
+            'arguments' => array('content' => NULL),
+        ),
     );
 }
 
 function front_page_testing_page($category = 'all') {
 
 
-    if (!$items = cache_get('custom_page_cache', 'cache_page')) {
-        // No cache found, so retrieve the data
-        // then add to the cache with expiration after 60 seconds
-        $items = front_page_get_content(); // returns an array of event objects
-        cache_set('custom_page_cache', $items, 'cache_page', time() + (60));
-        $items->current_page = get_current_page();
-        return theme('front_page_testing_page', $items);
-    }
+    /* if (!$items = cache_get('custom_page_cache', 'cache_page')) {
+      // No cache found, so retrieve the data
+      // then add to the cache with expiration after 60 seconds
+      $items = front_page_get_content(); // returns an array of event objects
+      cache_set('custom_page_cache', $items, 'cache_page', time() + (60));
+      $items->current_page = get_current_page();
+      return theme('front_page_testing_page', $items);
+      } */
+    $items = new stdClass();
+    $items->data = front_page_get_content($category);
     $items->data->current_page = get_current_page();
     return theme('front_page_testing_page', $items->data);
 }
 
 function get_current_page() {
+    if (!empty($_COOKIE['page'])) {
+        return $_COOKIE['page'];
+    }
     return 1;
 }
 
@@ -229,8 +263,19 @@ function get_slider_params() {
     echo json_encode($params);
 }
 
-function get_images_list() {
-    $content = front_page_get_content();
+function get_images_list($node_id) {
+    $result = db_query('SELECT td.name FROM term_data td,term_node tn WHERE tn.nid=' . $node_id . ' AND tn.tid=td.tid');
+    while ($res = db_fetch_object($result)) {
+
+        $terms_name = $res->name;
+    }
+    //echo $terms_name;
+    if (!empty($terms_name)) {
+        $content = front_page_get_content($terms_name);
+    } else {
+        $content = front_page_get_content();
+    }
+
     //print_r($content);
     $images = array();
 

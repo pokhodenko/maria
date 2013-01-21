@@ -12,6 +12,9 @@ function seven_preprocess_page(&$vars) {
   if ((strpos($alias, 'gallery') !== FALSE)) {
     $vars['template_files'][] = 'visitors_page';
   }
+  if ((strpos($alias, 'front') !== FALSE)) {
+    $vars['template_files'][] = 'visitors_page';
+  }
   if (strpos($alias, 'contact') !== FALSE) {
     $vars['template_files'][] = 'visitors_page';
   }

@@ -23,7 +23,7 @@ root {
     width: 990px;
 }
 #page{
-    width: 1323px;
+    width: 1332px;
     margin: auto;
 }
 #block-menu-primary-links li{
@@ -31,4 +31,14 @@ root {
 }
 .gallery{
     min-height: 444px;
+}
+.right_pagination_wrapper{
+    float: right;
+    width: 332px;
+}
+.right_pagination{
+    height: 10px;
+}
+.front_page_image{
+    height: 110px;
 }

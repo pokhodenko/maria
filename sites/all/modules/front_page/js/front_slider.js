@@ -29,13 +29,14 @@ $(document).ready(function(){
     });
 });
 function params_loaded(){
-    
+    setCookie('page', '1');
     $('.image').click(function(){
         id = $(this).attr('id');
         //alert(id);
         
         
         if (Slider_params.animation_completed == true){
+            showElementDescription(id);
             $('.image').removeClass('active');
             $(this).addClass('active');
             Params.manually_changed_hash = false;
@@ -43,10 +44,25 @@ function params_loaded(){
             replace_element_backbround('.part',id);
             startAnimation(id,10);
             
+            
         }
         
     });
+    $('.pagination_element a').click(function(){
+        var id = $(this).attr('id').split('page_').join("");
+        
+        setCookie('page', id);
+        window.location.hash = $(this).attr('href').split('#').join('');
+        window.location.reload();
+        return false;
+    });
+    
 
+}
+function showElementDescription(id){
+    $('.element_description').hide();
+    $('#desc_'+id).show();
+    
 }
 
 function startAnimation(node_id,speed){

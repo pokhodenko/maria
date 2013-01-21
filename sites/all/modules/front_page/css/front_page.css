@@ -32,7 +32,7 @@ root {
     background-color: #888;
 }
 
-.right_sidebar .image{
+.right_sidebar .image, .front_page_image{
     float: left;
     padding: 0 1px 1px 0;
     opacity: 0.4;
@@ -62,4 +62,14 @@ root {
 .right_sidebar .image:hover{
   opacity: 1;
 }*/
+.right_pagination{
+    margin: 10px;
+}
+.pagination_element{
+    height: 10px;
+    width: 10px;
+    background-color: #666;
+    float: left;
+    margin-right: 10px; 
+}
 

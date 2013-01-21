@@ -1231,7 +1231,7 @@ function request_uri() {
       $uri = $_SERVER['SCRIPT_NAME'];
     }
   }
-  if (($uri == '/')||($uri == '/en')||($uri == '/ru')||(FALSE !== strpos($uri, '/gallery')))
+  if (($uri == '/')||($uri == '/en')||($uri == '/ru')||(FALSE !== strpos($uri, '/gallery'))||(FALSE !== strpos($uri, '/ajax_load_params'))||(FALSE !== strpos($uri, '/ajax_images_list')))
   $uri .= get_specific_url_part();
   // Prevent multiple slashes to avoid cross site requests via the FAPI.
   $uri = '/'. ltrim($uri, '/');

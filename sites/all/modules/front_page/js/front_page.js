@@ -9,7 +9,7 @@ $(document).ready(function (){
             Params[k] = v;
         })
     });
-    $.getJSON("/ajax_images_list",function(data){
+    $.getJSON("/ajax_images_list/"+$('.image:first').attr('id'),function(data){
         Images = new Object();
         $.each(data,function(k,v){
             var img = new Image();
@@ -29,12 +29,12 @@ $(document).ready(function (){
             }
         }
     });
-    $('.right_sidebar .image').hover(function(){      
+    $('.right_sidebar .image,.front_page_image').hover(function(){      
         $(this).animate({
             opacity:'1'         
         },150);
     });
-    $('.right_sidebar .image').mouseout(function(){
+    $('.right_sidebar .image,.front_page_image').mouseout(function(){
         $(this).animate({
             opacity:'0.4'
         },150);

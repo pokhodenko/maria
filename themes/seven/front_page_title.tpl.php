@@ -3,7 +3,7 @@
     
   </div>
   <div id="site-title">
-    <?php echo $content->title;?>
+      <a href="<?php echo url(''); ?>"><?php echo $content->title;?></a>
   </div>
   
 </div>
