@@ -5,7 +5,7 @@
 body {
   color: #000;
   background: #fff;
-  font: normal 81.3%/1.538em "Helvetica", "Lucida Sans Unicode", sans-serif;
+
 }
 a {
   color: #0074BD;
@@ -1044,7 +1044,7 @@ form#views-ui-preview-form input#preview-submit {
 #main_menu_region .delimiter{
   height: 2px;
   clear: both;
-  background-color: #555;
+  background-color: #888;
 }
 #site_title_box{
   float: left;
