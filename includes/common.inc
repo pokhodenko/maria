@@ -1629,7 +1629,7 @@ function l($text, $path, $options = array()) {
       $options['attributes']['class'] = 'active';
     }
   }
-
+  
   // Remove all HTML and PHP tags from a tooltip. For best performance, we act only
   // if a quick strpos() pre-check gave a suspicion (because strip_tags() is expensive).
   if (isset($options['attributes']['title']) && strpos($options['attributes']['title'], '<') !== FALSE) {

@@ -16,6 +16,7 @@ var part_size_y = 100;
 Slider_params = new Object();
 Slider_params.max_animation_timeout = 0;
 Slider_params.animation_completed = true;
+Slider_params['timeouts'] = new Object();
 $(document).ready(function(){
   
  
@@ -28,18 +29,21 @@ $(document).ready(function(){
         params_loaded();
     });
     $(".left_sidebar").bind("mouseenter",function(){
-         $('.portfolio_description').slideDown("slow");
+        $('.portfolio_description').slideDown("fast");
     }).bind("mouseleave",function(){
-        $('.portfolio_description').slideUp("slow");
+        $('.portfolio_description').slideUp("fast");
     });
 });
 function params_loaded(){
+    
     setCookie('page', '1');
+    
+    
     $('.image').click(function(){
         id = $(this).attr('id');
         //alert(id);
         
-        
+       
         if (Slider_params.animation_completed == true){
             showElementDescription(id);
             $('.image').removeClass('active');
@@ -47,21 +51,23 @@ function params_loaded(){
             Params.manually_changed_hash = false;
             window.location.hash='item_'+id;
             replace_element_backbround('.part',id);
-            startAnimation(id,10);
+            Slider_params['timeouts'] = new Object();
+            startAnimation(id,7);
             
             
         }
         
     });
     $('.pagination_element a').click(function(){
-        var id = $(this).attr('id').split('page_').join("");
+        $('.pagination_element a').removeClass('active');
+        $(this).addClass('active');
+        //var id = $(this).attr('id').split('page_').join("");
         
-        setCookie('page', id);
-        window.location.hash = $(this).attr('href').split('#').join('');
-        window.location.reload();
-        return false;
+        //setCookie('page', id);
+        //window.location.hash = $(this).attr('href').split('#').join('');
+        //window.location.reload();
+        //return false;
     });
-    
 
 }
 function showElementDescription(id){
@@ -71,6 +77,8 @@ function showElementDescription(id){
 }
 
 function startAnimation(node_id,speed){
+    
+    $('#main_image').removeClass('image_loading');
     Slider_params.animation_completed = false;
     Slider_params.max_animation_timeout = 0;
     $('.part').each(function (){
@@ -78,10 +86,10 @@ function startAnimation(node_id,speed){
     });
     //setTimeout(replace_element_backbround('.part',node_id),speed*100);
     
+    $('.right_sidebar').addClass('animation');
     $('.part').each(function (){
         id = $(this).attr('id');
         args = id.split("_");
-        //console.log(args[1]);
         position_x = -(args[3]*Params.part_size_x);
         position_y = -(args[1]*Params.part_size_y);
     
@@ -93,9 +101,9 @@ function startAnimation(node_id,speed){
     
     setTimeout(function(){
         replace_element_backbround('#main_image',node_id);
-    
+        $('.right_sidebar').removeClass('animation');
         Slider_params.animation_completed = true;
-    },parseInt(Slider_params.max_animation_timeout)+parseInt(600));
+    },parseInt(Slider_params.max_animation_timeout)+parseInt(500));
 }
 function set_prop(id,position_x,position_y){
     $(id).css('width',Params.part_size_x+'px');
@@ -107,7 +115,7 @@ function set_prop(id,position_x,position_y){
     //$(id).animate({opacity:'1'},200+Math.floor(Math.random()*1000));
     $(id).animate({
         opacity:'1'
-    },600);
+    },500);
 
 }
 function get_part_size_x(image_size_x,part_count_x){
@@ -122,9 +130,14 @@ function randomize_assoc(){
 function generate_timeout(column,row,speed){
     
    
-    timeout = (parseInt(column)+parseInt(row))*speed;
+    //timeout = (parseInt(column)+parseInt(row))*speed;
+    
     timeout = (Math.floor(Math.random()*100))*speed;
-    //console.log(timeout);
+
+    if (Slider_params['timeouts'][timeout]=='1'){
+        generate_timeout(column,row,speed);
+    }
+    Slider_params['timeouts'][timeout] = '1';
     if (Slider_params.max_animation_timeout<timeout){
         Slider_params.max_animation_timeout = timeout;
     }

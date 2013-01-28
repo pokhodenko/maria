@@ -16,18 +16,19 @@ root {
 }
 .left_sidebar{
     height: 444px;
-    width: 990px;
+    width: 999px;
 }
 .left_sidebar #main_image {
     height: 444px;
-    width: 990px;
+    width: 999px;
 }
 #page{
     width: 1332px;
     margin: auto;
 }
 #block-menu-primary-links li{
-    margin: 0px 30px 0px 30px;
+    width: 111px;
+    text-align: center;
 }
 .gallery{
     min-height: 444px;
@@ -42,3 +43,11 @@ root {
 .front_page_image{
     height: 110px;
 }
+.contacts_background .part{
+
+    background: url('/sites/default/files/imagecache/contacts_background_1366/site_images/contacts_background.png') no-repeat;
+}
+#contact_information{
+    background: url('/sites/default/files/imagecache/contacts_background_1366/site_images/contacts_background.png') no-repeat;
+}
+

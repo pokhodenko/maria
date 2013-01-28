@@ -67,8 +67,42 @@ $presets['main_image_1366'] = array (
       'action' => 'imagecache_resize',
       'data' => 
       array (
-        'width' => '990',
+        'width' => '999',
         'height' => '444',
+      ),
+    ),
+  ),
+);
+$presets['contacts_background_1366'] = array (
+  'presetname' => 'contacts_background_1366',
+  'actions' => 
+  array (
+    0 => 
+    array (
+      'weight' => '0',
+      'module' => 'imagecache',
+      'action' => 'imagecache_resize',
+      'data' => 
+      array (
+        'width' => '1332',
+        'height' => '555',
+      ),
+    ),
+  ),
+);
+$presets['maria_photo_1366'] = array (
+  'presetname' => 'maria_photo_1366',
+  'actions' => 
+  array (
+    0 => 
+    array (
+      'weight' => '0',
+      'module' => 'imagecache',
+      'action' => 'imagecache_resize',
+      'data' => 
+      array (
+        'width' => '220',
+        'height' => '110',
       ),
     ),
   ),

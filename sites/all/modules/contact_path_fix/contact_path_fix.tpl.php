@@ -1,4 +1,4 @@
-<div class="clear-block">
+<div class="clear-block relative contacts">
     <div id="contact_information" class="main_content">
         <div id="contacts_right">
             <div class="contact_item">
@@ -23,6 +23,33 @@
             <div class="body">
                 <?php print $node->content['body']['#value']; ?>
             </div>
+        </div>
+
+    </div>
+    <div class="contacts_background" >
+        <div id="image-slider-wrapper">
+            <?php
+            $x_parts = 12;
+            $y_parts = 5;
+
+            $parts = array();
+
+            for ($i = 0; $i < $y_parts; $i++) {
+                $parts[$i] = array();
+                for ($j = 0; $j < $x_parts; $j++) {
+                    $parts[$i][$j] = $j;
+                }
+            }
+            ?>
+            <?php foreach ($parts as $key => $partx): ?>
+                <div id="row_<?php echo $key; ?>" class="row">
+                    <?php foreach ($partx as $part): ?>
+                        <div id="row_<?php echo $key; ?>_part_<?php echo $part; ?>" class="part"></div>
+                    <?php endforeach; ?>
+                </div>
+
+
+            <?php endforeach; ?>
         </div>
     </div>
 

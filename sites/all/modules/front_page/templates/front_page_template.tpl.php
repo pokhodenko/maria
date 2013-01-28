@@ -3,7 +3,7 @@
         <div class="right_sidebar">
 
             <?php foreach ($content->nodes as $page_number => $content_page): ?>
-                <?php $pages[$page_number] = $content_page[0]->nid; ?>
+                <?php $pages[$page_number] = $content_page[0]->taxonomy; ?>
                 <?php if ($page_number == $content->current_page): ?>
                     <?php foreach ($content_page as $key => $node): ?>
                         <div id="<?php echo $node->nid; ?>" class="image">
@@ -57,17 +57,24 @@
         </div>
     </div>
     <div class="clear-block"></div>
+    <?php if (sizeof($pages) > 1): ?>
+        <div class="right_pagination_wrapper">
+            <ul class="right_pagination">
 
-    <div class="right_pagination_wrapper">
-        <div class="right_pagination">
-
-            <?php foreach ($pages as $page => $nid): ?>
-                <div class="pagination_element">
-                    <a id="page_<?php echo $page; ?>" href="#item_<?php echo $nid ?>"><?php echo $page; ?></a>
-                </div>
-            <?php endforeach; ?>  
-        </div> 
-    </div>
+                <?php foreach ($pages as $page => $taxonomy): ?>
+                    <li class="pagination_element">
+                        <?php
+                        $link = array();
+                        $link['text'] = $page;
+                        $link['href'] = 'gallery/' . $taxonomy . '/' . $page;
+                        $link['options']['attributes']['id'] = 'page_' . $page;
+                        echo l($link['text'], $link['href'], $link['options']);
+                        ?>
+                    </li>
+                <?php endforeach; ?>  
+            </ul> 
+        </div>
+    <?php endif; ?>
 
 
     <?php /* <div class="my_title">
