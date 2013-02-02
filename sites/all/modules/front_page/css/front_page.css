@@ -14,6 +14,7 @@ body{
     font-size: 12px;
     /*text-shadow: 0px 0px 1px rgb(148, 148, 148);*/
 }
+
 #site-title{
     font-size: 24px;
     color: #000;
@@ -52,11 +53,18 @@ body{
 .right_sidebar .image, .front_page_image{
     float: left;
     padding: 0 1px 1px 0;
-    opacity: 0.7;
+    
     filter: alpha(opacity=40);
     /*-moz-opacity: 0.4;*/
     cursor: pointer;
 }
+.right_sidebar .image{
+    opacity: 0.7;
+}
+.front_page_image{
+    opacity: 0;
+}
+
 .right_sidebar .image.active{
     opacity: 1 !important;
     filter: alpha(opacity=100) !important;

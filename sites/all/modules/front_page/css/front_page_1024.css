@@ -1,0 +1,53 @@
+/* 
+    Document   : my_module
+    Created on : 12.12.2012, 19:44:02
+    Author     : Acer
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+root { 
+    display: block;
+}
+
+.right_sidebar{
+    float: right;
+    width: 333px;
+}
+.left_sidebar{
+    height: 444px;
+    width: 999px;
+}
+.left_sidebar #main_image {
+    height: 444px;
+    width: 999px;
+}
+#page{
+    width: 1332px;
+    margin: auto;
+}
+#block-menu-primary-links li{
+    width: 111px;
+    text-align: center;
+}
+.gallery{
+    min-height: 444px;
+}
+.right_pagination_wrapper{
+    float: right;
+    width: 332px;
+}
+.right_pagination{
+    height: 10px;
+}
+.front_page_image{
+    height: 110px;
+}
+.contacts_background .part{
+
+    background: url('/sites/default/files/imagecache/contacts_background_1366/site_images/contacts_background.png') no-repeat;
+}
+#contact_information{
+    background: url('/sites/default/files/imagecache/contacts_background_1366/site_images/contacts_background.png') no-repeat;
+}
+

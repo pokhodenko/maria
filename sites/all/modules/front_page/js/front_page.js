@@ -9,32 +9,44 @@ $(document).ready(function (){
         $.each(data,function(k,v){
             Params[k] = v;
         })
+        /* setTimeout(function(){
+            params_loaded();
+        },1000);*/
         $.getJSON("/ajax_images_list/"+$('.image:first').attr('id'),function(data){
-        Images = new Object();
-        $.each(data,function(k,v){
-            var img = new Image();
-            img.src = v;
-            Images[k] = img;
-        })
-        var first_image = $('.image:first');
-       
-        Images[first_image.attr('id')].onload = function(){
+            Images = new Object();
+            $.each(data,function(k,v){
+                var img = new Image();
+                img.src = v;
+                Images[k] = img;
+            })
+            var first_image = $('.image:first');
+            params_loaded();
+            Images[first_image.attr('id')].onload = function(){
            
-            
-            
-            if (window.location.hash==''){
-                first_image.click();
+                        
+                if (window.location.hash==''){
+                    
+                    $(document).ready(function(){
+                            first_image.click();
+                        });
                
-            }
-            else{
-                var el = window.location.hash.split('item_').join('');
-                if ($(el).size()>0){
-                    $(el).click();
+                }
+                else{
+                    var el = window.location.hash.split('item_').join('');
+                    if ($(el).size()>0){
+                        /*
+                        setTimeout(function(){
+                            $(el).click();
+                        },1000);*/
+                        $(document).ready(function(){
+                            $(el).click();
+                        });
+                        //$(el).click();
+                    }
                 }
             }
-        }
-        
-    });
+
+        });
     });
     
     $('.right_sidebar .image,.front_page_image').hover(function(){      

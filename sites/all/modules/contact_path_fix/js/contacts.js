@@ -25,7 +25,7 @@ function startContactsAnimation(){
         position_y = -(args[1]*Params.part_size_y);
     
         //((args[3])+(args[1]*4))*10
-        setTimeout('set_prop('+id+','+position_x+','+position_y+')', generate_timeout(args[3],args[1],10));
+        setTimeout('set_prop('+id+','+position_x+','+position_y+')', generate_timeout(args[3],args[1],5));
         
     // $(this).css('background-position',position_x+'px '+position_y+'px' );
     });
@@ -35,8 +35,8 @@ function startContactsAnimation(){
         //replace_element_backbround('#main_image',node_id);
         $('.contacts_background').remove();
         $('#contact_information').css('opacity','1');
-        $('#contacts_right').fadeIn("slow");
-        $('#contacts_left').fadeIn("slow");
+        $('#contacts_right').fadeIn("fast");
+        $('#contacts_left').fadeIn("fast");
         
         Slider_params.animation_completed = true;
     },parseInt(Slider_params.max_animation_timeout)+parseInt(600));
