@@ -53,7 +53,7 @@ body{
 .right_sidebar .image, .front_page_image{
     float: left;
     padding: 0 1px 1px 0;
-    
+
     filter: alpha(opacity=40);
     /*-moz-opacity: 0.4;*/
     cursor: pointer;
@@ -92,10 +92,17 @@ body{
     text-align: center;
 }
 .pagination_element{
-    background-color: #666;
     margin-right: 10px;
     list-style: none;
     display: inline;
+}
+.pagination_element a {
+    padding: 10px 2px 2px 10px;
+    font-size: 0px;
+    background: url(/themes/seven/images/front_page/pager_inactive.png);
+}
+.pagination_element a.active {
+    background: url(/themes/seven/images/front_page/pager_active.png);
 }
 #main_menu_region li a.active {
     color: #99ddff !important;

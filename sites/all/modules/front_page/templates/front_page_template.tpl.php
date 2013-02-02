@@ -65,7 +65,7 @@
                     <li class="pagination_element">
                         <?php
                         $link = array();
-                        $link['text'] = $page;
+                        $link['text'] = 'page '.$page;
                         $link['href'] = 'gallery/' . $taxonomy . '/' . $page;
                         $link['options']['attributes']['id'] = 'page_' . $page;
                         echo l($link['text'], $link['href'], $link['options']);
