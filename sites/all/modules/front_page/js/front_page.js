@@ -12,7 +12,7 @@ $(document).ready(function (){
         /* setTimeout(function(){
             params_loaded();
         },1000);*/
-        $.getJSON("/ajax_images_list/"+$('.image:first').attr('id'),function(data){
+        $.getJSON("/ajax_images_list/"+Drupal.settings.gallery.language+'/'+$('.image:first').attr('id'),function(data){
             Images = new Object();
             $.each(data,function(k,v){
                 var img = new Image();
