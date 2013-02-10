@@ -15,19 +15,22 @@ $nodes = array();
             }
             endforeach; 
      endforeach; 
+     //  Работает через раз непонятно почему
      $nodes_count = sizeof($nodes);
      while(sizeof($nodes)<48){
          //echo (rand(0,$nodes_count));
-         $nodes[] = $nodes[rand(0,$nodes_count)];
-         //$nodes[] = $nodes[2];
+         $nodes[] = $nodes[mt_rand(0,$nodes_count-1)];
+         
      }
-     shuffle ($nodes);
+     //shuffle ($nodes);
+     
+      
      ?>
     
     <?php foreach ($nodes as $id=>$node): ?>
-        <div id="<?php echo $id; ?>" class="front_page_image">
-            <a href="<?php echo url('gallery/' . $node->taxonomy.'/'.$node->page_number, array('fragment' => 'item_' . $node->nid)); ?>">
-                <img class="greyscale" src="<?php echo $node->field_image_preview; ?>"/>
+        <div id="<?php print $id; ?>" class="front_page_image">
+            <a href="<?php print url('gallery/' . $node->taxonomy.'/'.$node->page_number, array('fragment' => 'item_' . $node->nid)); ?>">
+                <img class="greyscale" src="<?php print $node->field_image_preview; ?>"/>
             </a>
         </div>
     <?php endforeach; ?>
