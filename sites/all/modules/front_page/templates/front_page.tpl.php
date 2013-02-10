@@ -27,7 +27,7 @@ $nodes = array();
     <?php foreach ($nodes as $id=>$node): ?>
         <div id="<?php echo $id; ?>" class="front_page_image">
             <a href="<?php echo url('gallery/' . $node->taxonomy.'/'.$node->page_number, array('fragment' => 'item_' . $node->nid)); ?>">
-                <img src="<?php echo $node->field_image_preview; ?>"/>
+                <img class="greyscale" src="<?php echo $node->field_image_preview; ?>"/>
             </a>
         </div>
     <?php endforeach; ?>

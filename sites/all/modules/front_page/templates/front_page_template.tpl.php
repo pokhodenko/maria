@@ -95,7 +95,7 @@
       <?php echo 'current_page = '. $content->current_page; ?>
 
      */ ?>
-    <?php // echo '<pre>';print_r($content);echo '</pre>'; ?>
+    <?php //  echo '<pre>';print_r($content);echo '</pre>'; ?>
 
 
 

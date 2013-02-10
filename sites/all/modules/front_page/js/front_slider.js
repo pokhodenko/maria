@@ -95,8 +95,8 @@ function startAnimation(node_id,speed){
     $('.part').each(function (){
         id = $(this).attr('id');
         args = id.split("_");
-        position_x = -(args[3]*Params.part_size_x);
-        position_y = -(args[1]*Params.part_size_y);
+        position_x = -(args[3]*Params[get_imagecache_suffix()].part_size_x);
+        position_y = -(args[1]*Params[get_imagecache_suffix()].part_size_y);
     
         //((args[3])+(args[1]*4))*10
         setTimeout('set_prop('+id+','+position_x+','+position_y+')', generate_timeout(args[3],args[1],speed));
@@ -111,8 +111,8 @@ function startAnimation(node_id,speed){
     },parseInt(Slider_params.max_animation_timeout)+parseInt(500));
 }
 function set_prop(id,position_x,position_y){
-    $(id).css('width',Params.part_size_x+'px');
-    $(id).css('height',Params.part_size_y+'px');
+    $(id).css('width',Params[get_imagecache_suffix()].part_size_x+'px');
+    $(id).css('height',Params[get_imagecache_suffix()].part_size_y+'px');
   
     $(id).css('left',(0-position_x)+'px');
     $(id).css('top',(0-position_y)+'px');

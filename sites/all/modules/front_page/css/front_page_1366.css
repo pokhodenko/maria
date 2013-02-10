@@ -13,17 +13,19 @@ root {
 .right_sidebar{
     float: right;
     width: 333px;
+    border-left: 1px solid #fff; 
 }
 .left_sidebar{
-    height: 444px;
+    height: 443px;
     width: 999px;
+    overflow: hidden;
 }
 .left_sidebar #main_image {
     height: 444px;
     width: 999px;
 }
 #page{
-    width: 1332px;
+    width: 1333px;
     margin: auto;
 }
 #block-menu-primary-links li{
@@ -35,7 +37,7 @@ root {
 }
 .right_pagination_wrapper{
     float: right;
-    width: 332px;
+    width: 333px;
 }
 .right_pagination{
     height: 10px;
@@ -43,11 +45,5 @@ root {
 .front_page_image{
     height: 110px;
 }
-.contacts_background .part{
 
-    background: url('/sites/default/files/imagecache/contacts_background_1366/site_images/contacts_background.png') no-repeat;
-}
-#contact_information{
-    background: url('/sites/default/files/imagecache/contacts_background_1366/site_images/contacts_background.png') no-repeat;
-}
 

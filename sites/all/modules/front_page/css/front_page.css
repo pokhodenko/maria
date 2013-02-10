@@ -142,3 +142,27 @@ body{
     background: url('/themes/seven/images/front_page/ajax-loader.gif') no-repeat;
     background-position: 50% 50%;
 }
+#site-footer{
+    text-align: center;
+    margin-top: 5px;
+    font-size: 9px;
+    color: #c6c6c6;
+    border-top: 1px solid #c6c6c6;
+    text-shadow: 0px 0px 0px #fff;
+}
+.main_content{
+    margin-top: 20px;
+}
+#contact_information{
+    position: relative;
+}
+#contacts_left .body{
+    margin-left: 20px;
+    margin-right: 60px;
+    padding-bottom: 5px;
+}
+.contacts_background{
+    position: absolute;
+    min-height: 444px;
+    top: 0;
+}

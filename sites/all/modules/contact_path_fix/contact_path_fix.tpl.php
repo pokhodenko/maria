@@ -30,7 +30,7 @@
         <div id="image-slider-wrapper">
             <?php
             $x_parts = 12;
-            $y_parts = 5;
+            $y_parts = 4;
 
             $parts = array();
 

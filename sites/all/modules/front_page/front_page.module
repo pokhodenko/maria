@@ -30,7 +30,6 @@ function front_page_init() {
     drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_slider.css');
     drupal_add_css(drupal_get_path('module', 'front_page') . '/css/front_page.css');
     drupal_add_js(drupal_get_path('module', 'front_page') . '/js/front_page.js');
-    tf_imagecache_image_path('contacts_background_1366', 'sites/default/files/site_images/contacts_background.png');
 }
 
 function get_main_image_width($scr_width) {
@@ -119,15 +118,17 @@ function front_page_get_content($category, $page = 1) {
     } else {
         $term_clause = '';
     }
-    if (!$page_content_cache = cache_get(get_cache_name_string($category,$page), 'cache_page')) {
-        $result = db_query('SELECT tn.nid FROM term_node tn,term_data td,node n WHERE td.vid = 1 AND tn.nid=n.nid AND tn.tid=td.tid ' . $term_clause . ' ORDER BY n.created DESC');
+    if (!$page_content_cache = cache_get(get_cache_name_string($category, $page), 'cache_page')) {
+        global $language;
+           
+        $result = db_query('SELECT tn.nid FROM term_node tn,term_data td,node n WHERE td.vid = 1  AND tn.nid=n.nid AND tn.tid=td.tid ' . $term_clause . ' ORDER BY n.created DESC');
         $nids = array();
         while ($res = db_fetch_object($result)) {
 
             $nids[] = $res->nid;
         }
         $nodes = array();
-
+        
         foreach ($nids as $nid) {
 
             $node = node_load($nid);
@@ -147,6 +148,7 @@ function front_page_get_content($category, $page = 1) {
             unset($node->last_comment_timestamp);
             unset($node->format);
             unset($node->content);
+            
 
 
             foreach ($node->taxonomy as $taxonomy) {
@@ -158,10 +160,14 @@ function front_page_get_content($category, $page = 1) {
                 }
             }
             $node->taxonomy = $taxonomy;
-            tf_imagecache_image_path($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath']);
-            tf_imagecache_image_path($main_image_imagecache_preset, $node->field_main_image[0]['filepath']);
             $node->field_image_preview = imagecache_create_url($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath'], false, false);
             $node->field_main_image = imagecache_create_url($main_image_imagecache_preset, $node->field_main_image[0]['filepath'], false, false);
+            if (!file_exists ( $node->field_image_preview)) {
+                tf_imagecache_image_path($image_preview_imagecache_preset, $node->field_image_preview[0]['filepath']);
+            }
+            if (!file_exists ($node->field_main_image)) {
+                tf_imagecache_image_path($main_image_imagecache_preset, $node->field_main_image[0]['filepath']);
+            }
             ++$count;
             ${$node->taxonomy . '_count'}++; // variables like $images_count
 
@@ -172,11 +178,11 @@ function front_page_get_content($category, $page = 1) {
         }
         cache_set(get_cache_name_string($category, $page), $nodes, 'cache_page', time() + (60));
     }
-    if ($page_content_cache!==0){
+    if ($page_content_cache !== 0) {
         $nodes = $page_content_cache->data;
     }
     //echo '<pre>'.print_r($page_content_cache,true).'</pre>';
-    
+
     $return = new stdClass();
     $return->nodes = $nodes;
     $return->count = $count;
@@ -185,8 +191,10 @@ function front_page_get_content($category, $page = 1) {
 
     return $return;
 }
-function get_cache_name_string($category, $page = 1){
-    return 'front_page_get_content_'.$category.'_'.$page;
+
+function get_cache_name_string($category, $page = 1) {
+    global $language;
+    return $language->language.'_front_page_get_content_' . $category . '_' . $page . '_' . $_COOKIE['width'];
 }
 
 function tf_imagecache_image_path($presetname, $file_system_image_path) {

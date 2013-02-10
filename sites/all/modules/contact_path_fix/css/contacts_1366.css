@@ -1,0 +1,31 @@
+
+#contacts_right{
+    float: right;
+    width: 505px;
+    margin: 15px;
+}
+#contacts_left{
+    margin-right: 554px;
+    min-height: 444px;
+    border-right: 1px solid #000;
+}
+#contacts_skype{
+    background: url(/themes/seven/images/front_page/skype_icon.png) no-repeat;
+    padding: 5px 5px 10px 35px;
+    margin-top: 15px;
+}
+#contacts_email{
+    background: url(/themes/seven/images/front_page/mail_icon.png) no-repeat;
+    padding: 0px 5px 13px 35px;
+    margin-top: 6px;
+}
+.contacts{
+    min-height: 444px;
+}
+.contacts_background .part{
+
+    background: url('/sites/default/files/imagecache/contacts_background_1366/site_images/contacts_background.png') no-repeat;
+}
+#contact_information{
+    background: url('/sites/default/files/imagecache/contacts_background_1366/site_images/contacts_background.png') no-repeat;
+}

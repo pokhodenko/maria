@@ -7,18 +7,42 @@
 */
 
 root { 
-  display: block;
+    display: block;
 }
 
 .right_sidebar{
-  float: right;
-  width: 453px;
+    float: right;
+    width: 453px;
+}
+.left_sidebar{
+    height: 603px;
+    width: 1359px;
+    overflow: hidden;
+}
+.left_sidebar #main_image {
+    height: 604px;
+    width: 1359px;
 }
 #page{
-  /*width: 1812px;*/
+    width: 1813px;
+    margin: auto;
 }
-.left_sidebar #main_image{
-  height: 603px;
-  width: 815px;
+#block-menu-primary-links li{
+    width: 111px;
+    text-align: center;
 }
+.gallery{
+    min-height: 604px;
+}
+.right_pagination_wrapper{
+    float: right;
+    width: 453px;
+}
+.right_pagination{
+    height: 10px;
+}
+.front_page_image{
+    height: 150px;
+}
+
 

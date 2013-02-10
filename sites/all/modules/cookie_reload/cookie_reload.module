@@ -5,6 +5,7 @@
 function cookie_reload_init(){
 
   drupal_add_js(drupal_get_path('module', 'cookie_reload').'/js/cookie.js' );
+  drupal_add_js(drupal_get_path('module', 'cookie_reload').'/js/params.js' );
   drupal_add_js(drupal_get_path('module', 'cookie_reload').'/js/jquery.hashchange.min.js' );
 }
 /*

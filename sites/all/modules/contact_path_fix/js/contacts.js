@@ -8,8 +8,9 @@ $(document).ready(function (){
 });
 function startContactsAnimation(){
     Slider_params.max_animation_timeout = 0;
-    Params.part_size_x = 111;
-    Params.part_size_y = 111;
+    //Params.part_size_x = 111;
+    //Params.part_size_y = 111;
+    
     $('#contact_information').css('opacity','0');
     $('.part').each(function (){
         $(this).css('opacity','0');
@@ -21,10 +22,10 @@ function startContactsAnimation(){
         id = $(this).attr('id');
         args = id.split("_");
         
-        position_x = -(args[3]*Params.part_size_x);
-        position_y = -(args[1]*Params.part_size_y);
-    
-        //((args[3])+(args[1]*4))*10
+        position_x = -(args[3]*Params[get_imagecache_suffix()].part_size_x);
+        position_y = -(args[1]*Params[get_imagecache_suffix()].part_size_y);
+        
+            //((args[3])+(args[1]*4))*10
         setTimeout('set_prop('+id+','+position_x+','+position_y+')', generate_timeout(args[3],args[1],5));
         
     // $(this).css('background-position',position_x+'px '+position_y+'px' );

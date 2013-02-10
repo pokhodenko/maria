@@ -22,7 +22,7 @@ function setAllCookies(){
 function get_imagecache_suffix() {
     
     var width = window.innerWidth || document.documentElement.clientWidth;
-    
+    //return 1920;
     if ( width >= 1920) {
       return 1920;
     } else if ( width >= 1600) {

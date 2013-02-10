@@ -155,11 +155,13 @@ function seven_menu_item_link($link) {
     $categories = get_gallery_categories_links();
     $options = $link['localized_options'];
     foreach ($categories as $category) {
-        if ((strpos($link['link_path'], $category) !== false) && (strpos($_GET['q'], $category) !== false)) {
-            if (isset($options['attributes']['class'])) {
-                $options['attributes']['class'] .= ' active';
-            } else {
-                $options['attributes']['class'] = 'active';
+        if (isset($link['link_path'])) {
+            if ((strpos($link['link_path'], $category) !== false) && (strpos($_GET['q'], $category) !== false)) {
+                if (isset($options['attributes']['class'])) {
+                    $options['attributes']['class'] .= ' active';
+                } else {
+                    $options['attributes']['class'] = 'active';
+                }
             }
         }
     }

@@ -1,59 +1,72 @@
 <?php
 
-function contact_path_fix_init(){
-    drupal_add_css(drupal_get_path('module', 'contact_path_fix') . '/css/contacts.css');
+function contact_path_fix_init() {
+    $screen_widths = array(1920, 1600, 1440, 1366, 1280, 1024);
+    if ((!isset($_COOKIE['width'])) || (!in_array($_COOKIE['width'], $screen_widths))) {
+        $_COOKIE['width'] = 'default';
+    }
+    //$_COOKIE['width'] = 1280;
+    drupal_add_css(drupal_get_path('module', 'contact_path_fix') . '/css/contacts_' . $_COOKIE['width'] . '.css');
+    //drupal_add_css(drupal_get_path('module', 'contact_path_fix') . '/css/contacts.css');
     drupal_add_js(drupal_get_path('module', 'contact_path_fix') . '/js/contacts.js');
+    update_background_files();
 }
 
 function contact_path_fix_menu() {
-  $items['contacts'] = array(
-      'title' => 'Contact information',
-      'page callback' => 'contact_page',
-      'type' => MENU_CALLBACK,
-      'access callback' => 'user_access',
-      'access arguments' => array('see front page'),
-      'page arguments' => array(1, 2),
-  );
-  
-  return $items;
+    $items['contacts'] = array(
+        'title' => 'Contact information',
+        'page callback' => 'contact_page',
+        'type' => MENU_CALLBACK,
+        'access callback' => 'user_access',
+        'access arguments' => array('see front page'),
+        'page arguments' => array(1, 2),
+    );
+
+    return $items;
 }
-function contact_path_fix_theme(){
-   return array(
-      'contact_path_fix' => array(
-          'template' => 'contact_path_fix',
-          'arguments' => array('node' => NULL),
-      )
-  );
+
+function contact_path_fix_theme() {
+    return array(
+        'contact_path_fix' => array(
+            'template' => 'contact_path_fix',
+            'arguments' => array('node' => NULL),
+        )
+    );
 }
+
 function contact_page() {
-  global $language;
-  $path = drupal_lookup_path('source', $path = 'contact',$language->language);
-  $nid = str_replace('node/', '', $path);
-  $node = node_load(array('nid'=>$nid));
-  $teaser = false;
-  $page = true;
-  $node = node_build_content($node, $teaser, $page);
+    global $language;
+    $path = drupal_lookup_path('source', $path = 'contact', $language->language);
+    $nid = str_replace('node/', '', $path);
+    $node = node_load(array('nid' => $nid));
+    $teaser = false;
+    $page = true;
+    $node = node_build_content($node, $teaser, $page);
 
-  if ($links) {
-    $node->links = module_invoke_all('link', 'node', $node, $teaser);
-    drupal_alter('link', $node->links, $node);
-  }
+    if ($links) {
+        $node->links = module_invoke_all('link', 'node', $node, $teaser);
+        drupal_alter('link', $node->links, $node);
+    }
 
-  // Set the proper node part, then unset unused $node part so that a bad
-  // theme can not open a security hole.
-  $content = drupal_render($node->content);
-  if ($teaser) {
-    $node->teaser = $content;
-    unset($node->body);
-  }
-  else {
-    $node->body = $content;
-    unset($node->teaser);
-  }
+    // Set the proper node part, then unset unused $node part so that a bad
+    // theme can not open a security hole.
+    $content = drupal_render($node->content);
+    if ($teaser) {
+        $node->teaser = $content;
+        unset($node->body);
+    } else {
+        $node->body = $content;
+        unset($node->teaser);
+    }
 
-  // Allow modules to modify the fully-built node.
-  node_invoke_nodeapi($node, 'alter', $teaser, $page);
-  
-  $node->field_photo[0]['view'] = theme_imagecache('maria_photo_1366', $node->field_photo[0]['filepath']);
-  return theme('contact_path_fix',$node);
+    // Allow modules to modify the fully-built node.
+    node_invoke_nodeapi($node, 'alter', $teaser, $page);
+    tf_imagecache_image_path('maria_photo_' . $_COOKIE['width'], $node->field_photo[0]['filepath']);
+    $node->field_photo[0]['view'] = theme_imagecache('maria_photo_' . $_COOKIE['width'], $node->field_photo[0]['filepath']);
+
+    return theme('contact_path_fix', $node);
+}
+
+function update_background_files() {
+    tf_imagecache_image_path('contacts_background_' . $_COOKIE['width'], 'sites/default/files/site_images/contacts_background.png');
 }

@@ -12,18 +12,19 @@ root {
 
 .right_sidebar{
     float: right;
-    width: 333px;
+    width: 348px;
 }
 .left_sidebar{
-    height: 444px;
-    width: 999px;
+    height: 463px;
+    width: 1044px;
+    overflow: hidden;
 }
 .left_sidebar #main_image {
-    height: 444px;
-    width: 999px;
+    height: 464px;
+    width: 1044px;
 }
 #page{
-    width: 1332px;
+    width: 1393px;
     margin: auto;
 }
 #block-menu-primary-links li{
@@ -31,23 +32,17 @@ root {
     text-align: center;
 }
 .gallery{
-    min-height: 444px;
+    min-height: 464px;
 }
 .right_pagination_wrapper{
     float: right;
-    width: 332px;
+    width: 348px;
 }
 .right_pagination{
     height: 10px;
 }
 .front_page_image{
-    height: 110px;
+    height: 115px;
 }
-.contacts_background .part{
 
-    background: url('/sites/default/files/imagecache/contacts_background_1366/site_images/contacts_background.png') no-repeat;
-}
-#contact_information{
-    background: url('/sites/default/files/imagecache/contacts_background_1366/site_images/contacts_background.png') no-repeat;
-}
 
